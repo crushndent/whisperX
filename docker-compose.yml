@@ -1,0 +1,18 @@
+services:
+  whisperx:
+    build: .
+    image: whisperx-cuda
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - ./input:/data
+      - ./.env:/app/.env
+    working_dir: /app
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+    command: ["--help"] 
